@@ -4,7 +4,8 @@ import os
 import shutil
 # Create your views here.
 from django.http import HttpResponse
-
+from .models import Project, Report
+import datetime
 
 def index(request):
     clone_repo(request)
@@ -19,4 +20,7 @@ def clone_repo(request):
     if os.path.exists(dir_name):
         shutil.rmtree(dir_name)
 
-    repo = Repo.clone_from(url, dir_name)
+    # repo = Repo.clone_from(url, dir_name)
+    # CHeck if repo exists first, then add or update TODO
+    new_project = Project(name=project_name, repository_url= url, last_modified_date=datetime.date.today())
+    new_project.save()
