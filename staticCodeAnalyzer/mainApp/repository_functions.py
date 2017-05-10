@@ -6,18 +6,19 @@ import json
 from datetime import datetime, timedelta
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#TODO class maybe?
+
+
+# TODO class maybe?
 
 class RepositoryManager:
     def __init__(self, base_url):
-        if is_repo_correct(base_url):
-            self.url = base_url
-            self.project_name_with_author = process_github_url(self.url)
-            project_name = self.project_name_with_author.split('/')[1:]
-            self.project_name = '_'.join(project_name)
-            self.cloned_repo_path = base_dir + '/cloned_repos/' + self.project_name_with_author.split('/')[-1]
-            self.cloned_before = False
-            self.latest_commit_date = None
+        self.url = base_url
+        self.project_name_with_author = process_github_url(self.url)
+        project_name = self.project_name_with_author.split('/')[1:]
+        self.project_name = '_'.join(project_name)
+        self.cloned_repo_path = base_dir + '/cloned_repos/' + self.project_name_with_author.split('/')[-1]
+        self.cloned_before = False
+        self.latest_commit_date = None
 
     def clone_repo(self):
         '''
@@ -68,8 +69,9 @@ class RepositoryManager:
             date_to_check = repo.iter_commits(paths=blob.path, max_count=1).__next__().committed_date
             if latest_date < date_to_check:
                 latest_date = date_to_check
-        final_date =  datetime.fromtimestamp(latest_date)
+        final_date = datetime.fromtimestamp(latest_date)
         return final_date
+
 
 # HELPER FUNCTIONS
 
@@ -97,6 +99,7 @@ def is_already_cloned(project_path):
         return False
     return True
 
+
 def process_github_url(repo_url):
     '''
     Parses the given repository url to get the project path.
@@ -104,7 +107,6 @@ def process_github_url(repo_url):
     chunks_array = repo_url.rstrip('.git').rstrip('/').split('/')
     print(chunks_array)
     github_index = chunks_array.index('github.com')
-    project_chunks = chunks_array[github_index+1:]
+    project_chunks = chunks_array[github_index + 1:]
     project_url = '/'.join(project_chunks)
     return project_url
-

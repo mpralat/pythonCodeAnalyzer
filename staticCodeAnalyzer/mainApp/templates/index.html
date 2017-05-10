@@ -31,14 +31,13 @@
         {% endbuttons %}
     </form>
 </div>
-
 {% endblock %}
 
 
 {% if projects_list %}
 <ul>
     {% for project in projects_list %}
-    <li><a href="/{{ project.id }}/">
+    <li><a href="/project/{{ project.id }}/">
         <tr>
             <td> {{ project.name }} </td>
             <td> {{ project.last_commit_date }} </td>

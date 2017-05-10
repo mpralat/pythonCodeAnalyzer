@@ -4,7 +4,6 @@ from django.urls import reverse
 
 from .models import Project, Report
 from django.http import Http404
-from django.utils.timezone import now
 from .forms import ProjectForm
 from . import repository_functions
 
@@ -22,12 +21,10 @@ def add_project(request):
             print('Adding new repository!')
             url = request.POST.get('repository_url')
 
-            repositoryManager = repository_functions.RepositoryManager(url)
-
-            print(repository_functions.is_repo_correct(url))
             if not repository_functions.is_repo_correct(url):
                 print("incorrect url")
             else:
+                repositoryManager = repository_functions.RepositoryManager(url)
                 repositoryManager.clone_repo()
                 results =  Project.objects.filter(name=repositoryManager.project_name)
                 if results.count() > 0:
@@ -40,7 +37,7 @@ def add_project(request):
                                           cloned_dir_path=repositoryManager.cloned_repo_path)
                     new_project.save()
                     project = new_project
-                return HttpResponseRedirect('/' + str(project.id) + '/')
+                return HttpResponseRedirect('/project/' + str(project.id) + '/')
     else:
         return HttpResponseRedirect('/')
 
