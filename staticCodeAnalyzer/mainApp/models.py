@@ -4,7 +4,7 @@ from django.db import models
 class Project(models.Model):
     name = models.CharField(max_length=50)
     repository_url = models.URLField()
-    last_modified_date = models.DateField()
+    last_commit_date = models.DateTimeField()
 
 
 class Report(models.Model):

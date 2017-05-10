@@ -1,6 +1,63 @@
 {% load staticfiles %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="{% static 'functionality.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
 
 <header>
     Static Code Analyzer
 </header>
+
+{% block content %}
+<div class="form_section">
+    <form method="post" enctype="multipart/form-data" id="repository_form" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" id="addProject" value="Add project" onclick="sendFormRequest()">
+                {% bootstrap_icon "star" %} Submit
+            </button>
+        {% endbuttons %}
+    </form>
+</div>
+
+    <!--<fieldset>-->
+        <!--<div class="form-group">-->
+            <!--<label>Link to the github repository</label>-->
+                <!--<input type="text" name="repo_url"/>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<input type="submit"  id="addProject" value="Add project" onclick="sendFormRequest()"/>-->
+        <!--</div>-->
+    <!--</fieldset>-->
+<!--</form>-->
+{% endblock %}
+
+
+{% if projects_list %}
+<ul>
+    {% for project in projects_list %}
+    <li><a href="/{{ project.id }}/">
+        <tr>
+            <td> {{ project.name }} </td>
+            <td> {{ project.last_commit_date }} </td>
+        </tr>
+        </a> </li>
+    {% endfor %}
+</ul>
+    {% else %}
+    <p>No projects available.</p>
+{% endif %}
+
+
