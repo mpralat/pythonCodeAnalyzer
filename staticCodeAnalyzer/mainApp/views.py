@@ -24,6 +24,7 @@ def add_project(request):
 
             repositoryManager = repository_functions.RepositoryManager(url)
 
+            print(repository_functions.is_repo_correct(url))
             if not repository_functions.is_repo_correct(url):
                 print("incorrect url")
             else:
@@ -40,25 +41,8 @@ def add_project(request):
                     new_project.save()
                     project = new_project
                 return HttpResponseRedirect('/' + str(project.id) + '/')
-
-                # else:
-                #     print("update project!")
-
-    #         if not repository_functions.is_repo_correct(url):
-    #             print("Url not correct")
-    #         #     TODO message the user that the url is not correct
-    #         else:
-    #             project_data = repository_functions.clone_repo(url)
-    #             cloned_repo_path = project_data[0]
-    #             project_name = project_data[1]
-    #             # TODO add timezone
-    #             commit_date = repository_functions.latest_commit_date_from_cloned_repo(cloned_repo_path)
-    #             new_project = Project(name=project_name, repository_url=url, last_commit_date=commit_date,
-    #                                   cloned_dir_path=cloned_repo_path)
-    #             new_project.save()
-    #             print(new_project.id)
-    #             return redirect(reverse('display_project'), kwargs={'project' : new_project})
-    # return None
+    else:
+        return HttpResponseRedirect('/')
 
 
 def display_project(request, project_id):

@@ -79,6 +79,7 @@ def is_repo_correct(repo_url):
     :return: True if the url is correct, False otherwise.
     '''
     print("Checking if the repository is correct")
+    # TODO something's wrong
     g = git.cmd.Git()
     try:
         response = g.ls_remote(repo_url)
