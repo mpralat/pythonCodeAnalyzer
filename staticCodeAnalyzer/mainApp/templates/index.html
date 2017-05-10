@@ -21,27 +21,17 @@
 
 {% block content %}
 <div class="form_section">
-    <form method="post" enctype="multipart/form-data" id="repository_form" class="form">
+    <form method="post" enctype="multipart/form-data" id="repository_form" class="form" action= "{% url 'add_project' %}">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-            <button type="submit" id="addProject" value="Add project" onclick="sendFormRequest()">
+            <button type="submit" id="addProject" value="Add project">
                 {% bootstrap_icon "star" %} Submit
             </button>
         {% endbuttons %}
     </form>
 </div>
 
-    <!--<fieldset>-->
-        <!--<div class="form-group">-->
-            <!--<label>Link to the github repository</label>-->
-                <!--<input type="text" name="repo_url"/>-->
-        <!--</div>-->
-        <!--<div>-->
-            <!--<input type="submit"  id="addProject" value="Add project" onclick="sendFormRequest()"/>-->
-        <!--</div>-->
-    <!--</fieldset>-->
-<!--</form>-->
 {% endblock %}
 
 

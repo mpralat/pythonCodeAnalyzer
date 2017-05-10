@@ -43,7 +43,7 @@ class IsAlreadyClonedTestCase(TestCase):
 class GetLastCommitDateFromUrlTestCase(TestCase):
     def test_correct_last_commit_date(self):
         project_name = "mpralat/PlaneContours"
-        true_last_commit_date = datetime.datetime(2016, 11, 12, 20, 32, 38)
+        true_last_commit_date = datetime.datetime(2016, 11, 12, 19, 32, 38)
         last_commit_date = repository_functions.latest_commit_date_from_url(project_name)
         self.assertEqual(true_last_commit_date, last_commit_date)
 
