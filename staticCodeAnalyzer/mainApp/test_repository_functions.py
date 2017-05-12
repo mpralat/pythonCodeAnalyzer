@@ -2,9 +2,7 @@ from django.test import TestCase
 from . import repository_functions
 import os
 import datetime
-import mock
 
-# Create your tests here.
 
 class IsRepoCorrectTestCase(TestCase):
     def test_correct_repo_url(self):
@@ -59,4 +57,3 @@ class ProcessGithubUrlTestCase(TestCase):
         github_url = 'https://github.com/mpralat/PlaneContours/tree/better_1'
         expected_result = 'mpralat/PlaneContours/tree/better_1'
         self.assertEqual(expected_result, repository_functions.process_github_url(github_url))
-
