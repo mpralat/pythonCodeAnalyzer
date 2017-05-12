@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
-
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import Project, Report
 from django.http import Http404
 from .forms import ProjectForm
@@ -24,7 +22,7 @@ def add_project(request):
                 return HttpResponseRedirect('/')
             else:
                 repositoryManager = repository_functions.RepositoryManager(url)
-                repositoryManager.clone_repo()
+
                 results =  Project.objects.filter(name=repositoryManager.project_name)
                 if results.count() > 0:
                     print("Already in database!")
@@ -48,3 +46,12 @@ def display_project(request, project_id):
         raise Http404("Project does not exist")
     # reports = project.
     return render(request, 'project.html', {'project': project})
+
+def clone_project(request):
+    if request.POST:
+        project_id = request.POST.get('project_id')
+        print(project_id)
+        project = Project.objects.get(pk=int(project_id))
+        cloneManager = repository_functions.RepositoryManager(project.repository_url)
+        clone_code = cloneManager.clone_repo()
+        return HttpResponse(status=clone_code)

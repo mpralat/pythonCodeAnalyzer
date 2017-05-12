@@ -13,14 +13,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" xmlns="http://www.w3.org/1999/html"></script>
 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script src="{% static 'functionality.js' %}"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+<title>Static Code Analyzer</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
 <header>
     {{project.name}}
 </header>
-<body>
-    <table>
-        <thead>
+
+{% block content %}
+    {% csrf_token %}
+    <table class="table">
+        <thead class="thead-inverse">
             <tr>
                 <th>Name</th>
                 <th>Last modification date</th>
@@ -33,11 +36,31 @@
             <td> {{ project.repository_url }} </td>
         </tbody>
     </table>
-    <div class="link_container">
-        <a href="/">Back</a>
+    <div class="container-fluid">
+        <span id="project_state" class="label label-primary">Project site.</span>
     </div>
-    <button>
-        XD
-    </button>
 
-</body>
+    <div class="container-fluid">
+        <button type="button" class="btn" onclick="sendFormRequest()">Clone</button>
+        <button type="button" class="btn" onclick="sendFormRequest()">Generate a report</button>
+        <!--<a href="{% url 'clone_project' %}" class="btn btn-info" role="button">Clone project</a>-->
+        <a href="/" class="btn btn-info" role="button">Back</a>
+    </div>
+
+
+{% endblock %}
+
+{% if projects_list %}
+<ul>
+    {% for project in projects_list %}
+    <li><a href="/project/{{ project.id }}/">
+        <tr>
+            <td> {{ project.name }} </td>
+            <td> {{ project.last_commit_date }} </td>
+        </tr>
+        </a> </li>
+    {% endfor %}
+</ul>
+    {% else %}
+    <p>No reports available.</p>
+{% endif %}

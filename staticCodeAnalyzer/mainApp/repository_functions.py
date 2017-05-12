@@ -6,7 +6,9 @@ import json
 from datetime import datetime, timedelta
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+CLONED_AGAIN = 201
+NOT_CLONING = 202
+FIRST_CLONE = 203
 
 # TODO class maybe?
 
@@ -18,7 +20,7 @@ class RepositoryManager:
         self.project_name = '_'.join(project_name)
         self.cloned_repo_path = base_dir + '/cloned_repos/' + self.project_name_with_author.split('/')[-1]
         self.cloned_before = False
-        self.latest_commit_date = None
+        self.latest_commit_date = self.latest_commit_date_from_url()
 
     def clone_repo(self):
         '''
@@ -30,7 +32,6 @@ class RepositoryManager:
         # If the repo has already been cloned, we check if there were any new commits.
         print("Cloning the repository...")
         url_date = self.latest_commit_date_from_url()
-        self.latest_commit_date = url_date
 
         if is_already_cloned(self.cloned_repo_path):
             repo_date = self.latest_commit_date_from_cloned_repo()
@@ -40,13 +41,15 @@ class RepositoryManager:
                 Repo.clone_from(self.url, self.cloned_repo_path)
                 self.cloned_before = True
                 print("Cloned the repo again!")
+                return CLONED_AGAIN
             else:
                 self.cloned_before = True
                 print("No changes detected. Not cloning again.")
+                return NOT_CLONING
         else:
             Repo.clone_from(self.url, self.cloned_repo_path)
             print("Cloned the repo for the first time.")
-        return True
+        return FIRST_CLONE
 
     def latest_commit_date_from_url(self):
         url = 'https://api.github.com/repos/{project}/commits?per_page=1'.format(project=self.project_name_with_author)
