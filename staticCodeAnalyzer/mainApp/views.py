@@ -18,17 +18,16 @@ def add_project(request):
     form = ProjectForm(request.POST or None)
     if request.POST:
         if form.is_valid():
-            print('Adding new repository!')
             url = request.POST.get('repository_url')
-
-            if not repository_functions.is_repo_correct(url):
+            if not repository_functions.is_url_correct(url):
                 print("incorrect url")
+                return HttpResponseRedirect('/')
             else:
                 repositoryManager = repository_functions.RepositoryManager(url)
                 repositoryManager.clone_repo()
                 results =  Project.objects.filter(name=repositoryManager.project_name)
                 if results.count() > 0:
-                    print("Already in db!")
+                    print("Already in database!")
                     project = results.first()
                 else:
                     new_project = Project(name=repositoryManager.project_name,

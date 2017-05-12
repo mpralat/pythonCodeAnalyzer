@@ -28,7 +28,7 @@ class RepositoryManager:
         :return: 
         '''
         # If the repo has already been cloned, we check if there were any new commits.
-
+        print("Cloning the repository...")
         url_date = self.latest_commit_date_from_url()
         self.latest_commit_date = url_date
 
@@ -42,10 +42,10 @@ class RepositoryManager:
                 print("Cloned the repo again!")
             else:
                 self.cloned_before = True
-                print("No changes detected.")
+                print("No changes detected. Not cloning again.")
         else:
             Repo.clone_from(self.url, self.cloned_repo_path)
-            print("Cloned the repo")
+            print("Cloned the repo for the first time.")
         return True
 
     def latest_commit_date_from_url(self):
@@ -75,19 +75,20 @@ class RepositoryManager:
 
 # HELPER FUNCTIONS
 
-def is_repo_correct(repo_url):
+def is_url_correct(repo_url):
     '''
     Checks whether a repository exists and we can clone it. 
     :return: True if the url is correct, False otherwise.
     '''
-    print("Checking if the repository is correct")
-    # TODO something's wrong
-    g = git.cmd.Git()
+    print("Checking if the repository url is correct")
+    print(repo_url)
     try:
-        response = g.ls_remote(repo_url)
-    except Exception:
+        result = urlopen(repo_url)
+    except:
         return False
-    return True
+    if result.code == 200:
+        return True
+    return False
 
 
 def is_already_cloned(project_path):

@@ -2,23 +2,24 @@ from django.test import TestCase
 from . import repository_functions
 import os
 import datetime
+import mock
 
 # Create your tests here.
 
 class IsRepoCorrectTestCase(TestCase):
     def test_correct_repo_url(self):
         repo_url = 'https://github.com/git/git.git'
-        result = repository_functions.is_repo_correct(repo_url)
+        result = repository_functions.is_url_correct(repo_url)
         self.assertTrue(result)
 
     def test_incorrect_repo_ulr(self):
-        repo_url = "https:/github.com/no_repo/repo.git"
-        result = repository_functions.is_repo_correct(repo_url)
+        repo_url = "https://github.com/no_repo/repo.git"
+        result = repository_functions.is_url_correct(repo_url)
         self.assertFalse(result)
 
     def test_correct_repo_url_no_git_suffix(self):
-        repo_url = 'https://github.com/git/git'
-        result = repository_functions.is_repo_correct(repo_url)
+        repo_url = 'https://github.com/mpralat/notesRecognizer'
+        result = repository_functions.is_url_correct(repo_url)
         self.assertTrue(result)
 
 
@@ -42,8 +43,7 @@ class IsAlreadyClonedTestCase(TestCase):
 
 class GetLastCommitDateFromUrlTestCase(TestCase):
     def test_correct_last_commit_date(self):
-        testManager = repository_functions.RepositoryManager("url")
-        testManager.project_name_with_author = "mpralat/PlaneContours"
+        testManager = repository_functions.RepositoryManager("https://github.com/mpralat/PlaneContours")
         true_last_commit_date = datetime.datetime(2016, 11, 12, 19, 32, 38)
         last_commit_date = testManager.latest_commit_date_from_url()
         self.assertEqual(true_last_commit_date, last_commit_date)
