@@ -10,5 +10,5 @@ class Project(models.Model):
 
 class Report(models.Model):
     date = models.DateField()
-    pdf_file = models.FileField()
+    path_to_report = models.CharField(max_length=300, default='')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)

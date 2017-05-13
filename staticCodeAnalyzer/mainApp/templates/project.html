@@ -50,13 +50,15 @@
 
 {% endblock %}
 
-{% if projects_list %}
+{% if report_list %}
+<span>
+    Available reports
+</span>
 <ul>
-    {% for project in projects_list %}
-    <li><a href="/project/{{ project.id }}/">
+    {% for report in report_list %}
+    <li><a href="/report/{{ report.id }}/">
         <tr>
-            <td> {{ project.name }} </td>
-            <td> {{ project.last_commit_date }} </td>
+            <td> {{ report.date }} </td>
         </tr>
         </a> </li>
     {% endfor %}

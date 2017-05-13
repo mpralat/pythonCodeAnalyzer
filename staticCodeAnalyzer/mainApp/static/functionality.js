@@ -25,12 +25,18 @@ function sendFormRequest(project_id, url){
             },
             203: function () {
                 $('#project_state').text('Made first, fresh clone.');
+            },
+            204: function () {
+                $('#project_state').text('Report generated.');
+            },
+            205: function () {
+                $('#project_state').text('No changes detected. Not generating the report again.');
             }
-
         }
     }).done(function () {
         console.log("done");
         document.getElementById("report_button").disabled = false;
         document.getElementById("clone_button").disabled = false;
+        window.location.reload();
     });
 }

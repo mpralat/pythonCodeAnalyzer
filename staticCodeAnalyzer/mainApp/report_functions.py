@@ -2,6 +2,7 @@ import datetime
 import glob
 import os
 import subprocess
+import shutil
 
 
 class ReportManager:
@@ -31,7 +32,7 @@ class ReportManager:
         paths = get_immediate_subdirectories(self.project_dir)
         for path in paths:
             if not path == '.git':
-                os.rmdir(os.path.join(self.project_dir, path))
+                shutil.rmtree(os.path.join(self.project_dir, path))
 
     def run_flake(self, file_name):
         '''
@@ -67,7 +68,7 @@ class ReportManager:
 
         return flake_dict
 
-    def prepare_whole_report(self):
+    def create_whole_report(self):
         '''
         Prepares the flake output for all files and generates the pdf document.
         :return: 
@@ -83,9 +84,10 @@ class ReportManager:
         report_name = self.project_name + '_' + date + '.txt'
 
         # Preparing the txt file with report
-        with open(os.path.join(reports_dir, report_name), 'w') as report:
+        report_ful_path = os.path.join(reports_dir, report_name)
+        with open(report_ful_path, 'w') as report:
             report.write('Project: ' + self.project_name + '\n')
-            report.write('Generated: '  + date + '\n\n')
+            report.write('Generated: ' + date + '\n\n')
             for pyfile in glob.glob(self.project_dir + '/*.py'):
                 report.write('-----------------------------------------------')
                 report.write('\nFile: ' + pyfile.split('/')[-1] + '\n')
@@ -96,7 +98,7 @@ class ReportManager:
                         report.write('\t\tLine number: ' + item.get('line_num') +
                                      ',\t\tcolumn: ' + item.get('column_num') + '\n')
 
-        pass
+        return report_ful_path
 
 
 def get_immediate_subdirectories(main_dir):
@@ -112,4 +114,4 @@ man.leave_only_python_files()
 out = man.run_flake(
     '/home/marta/projects/PycharmProjects/staticCodeAnalyzer/staticCodeAnalyzer/cloned_repos/anncadClassifier/anncad.py')
 # print(man.parse_flake_output(out))
-man.prepare_whole_report()
+man.create_whole_report()

@@ -1,0 +1,27 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load staticfiles %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" xmlns="http://www.w3.org/1999/html"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="{% static 'functionality.js' %}"></script>
+<title>Static Code Analyzer</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+<header>
+    {{report.project.name}}
+</header>
+
+{% block content %}
+    {% csrf_token %}
+
+<div>
+    <iframe src="{{content}}"></iframe>
+</div>
+
+
+{% endblock %}
