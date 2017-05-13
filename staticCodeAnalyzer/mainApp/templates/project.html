@@ -41,8 +41,8 @@
     </div>
 
     <div class="container-fluid">
-        <button type="button" class="btn" onclick="sendFormRequest()">Clone</button>
-        <button type="button" class="btn" onclick="sendFormRequest()">Generate a report</button>
+        <button type="button" id="clone_button" class="btn" onclick="sendFormRequest('{{project.id}}', '/clone_project/')">Clone</button>
+        <button type="button" id="report_button" class="btn" onclick="sendFormRequest('{{project.id}}', '/generate_report/')">Generate a report</button>
         <!--<a href="{% url 'clone_project' %}" class="btn btn-info" role="button">Clone project</a>-->
         <a href="/" class="btn btn-info" role="button">Back</a>
     </div>

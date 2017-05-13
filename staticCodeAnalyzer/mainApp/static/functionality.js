@@ -1,17 +1,20 @@
 /**
  * Created by marta on 07.05.17.
  */
-function sendFormRequest(){
-    $('#project_state').text('Cloning the repository...');
-    var url = window.location.href;
-    var array = url.split('/');
-    var lastsegment = array[array.length - 2];
-    var request_url = '/clone_project/';
-   $.ajax({
-        url: request_url,
+function sendFormRequest(project_id, url){
+    console.log(project_id);
+    if(url === '/clone_project/'){
+         $('#project_state').text('Cloning the repository...');
+         document.getElementById("report_button").disabled = true;
+    } else {
+         $('#project_state').text('Generating the report...');
+         document.getElementById("clone_button").disabled = true;
+    }
+    $.ajax({
+        url: url,
         type: "POST",
         data: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
-                'project_id' : lastsegment},
+                'project_id' : project_id},
         dataType: "json",
         statusCode: {
             201: function () {
@@ -23,6 +26,11 @@ function sendFormRequest(){
             203: function () {
                 $('#project_state').text('Made first, fresh clone.');
             }
+
         }
+    }).done(function () {
+        console.log("done");
+        document.getElementById("report_button").disabled = false;
+        document.getElementById("clone_button").disabled = false;
     });
 }

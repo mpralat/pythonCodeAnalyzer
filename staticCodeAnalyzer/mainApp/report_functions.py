@@ -10,6 +10,7 @@ class ReportManager:
         self.flake_options = flake_options
         self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.project_name = project_name
+        self.project_dir = self.base_dir + '/cloned_repos/' + self.project_name
 
     def leave_only_python_files(self):
         '''
@@ -18,21 +19,19 @@ class ReportManager:
         Last, it removes all of the subdirectories (except the .git dir).
         :return: 
         '''
-        project_dir = self.base_dir + '/cloned_repos/' + self.project_name
-        for filename in glob.iglob(project_dir + '/**/*.*', recursive=True):
+        for filename in glob.iglob(self.project_dir + '/**/*.*', recursive=True):
             name, file_extension = os.path.splitext(filename)
             name = name.split('/')[-1]
             if file_extension == '.py':
-                new_destination = project_dir + '/' + str(name) + file_extension
+                new_destination = self.project_dir + '/' + str(name) + file_extension
                 os.rename(filename, new_destination)
             else:
                 os.remove(filename)
 
-        paths = get_immediate_subdirectories(project_dir)
+        paths = get_immediate_subdirectories(self.project_dir)
         for path in paths:
             if not path == '.git':
-                print(path)
-                os.rmdir(os.path.join(project_dir, path))
+                os.rmdir(os.path.join(self.project_dir, path))
 
     def run_flake(self, file_name):
         '''
@@ -44,7 +43,7 @@ class ReportManager:
         output = p.stdout.read()
 
         output = output.splitlines()
-        return output
+        return self.parse_flake_output(output)
 
     def parse_flake_output(self, flake_output):
         '''
@@ -61,19 +60,42 @@ class ReportManager:
             column_num = parsed_line[2]
             parsed_line = parsed_line[3].split(' ')
             err_code = parsed_line[1]
-            comment = ' '.join(parsed_line[1:-1])
-            print(comment)
+            comment = ' '.join(parsed_line[1:])
             if not flake_dict.get(err_code):
                 flake_dict[err_code] = []
             flake_dict[err_code].append({'line_num': line_num, 'column_num': column_num, 'comment': comment})
 
-        print(flake_dict)
+        return flake_dict
 
     def prepare_whole_report(self):
         '''
         Prepares the flake output for all files and generates the pdf document.
         :return: 
         '''
+        # TODO not generating for the second time same report
+        # Removing non-python files and creating a directory with reports.
+        self.leave_only_python_files()
+        reports_dir = os.path.join(self.base_dir, "reports")
+        if not os.path.exists(reports_dir):
+            os.mkdir(reports_dir)
+
+        date = datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+        report_name = self.project_name + '_' + date + '.txt'
+
+        # Preparing the txt file with report
+        with open(os.path.join(reports_dir, report_name), 'w') as report:
+            report.write('Project: ' + self.project_name + '\n')
+            report.write('Generated: '  + date + '\n\n')
+            for pyfile in glob.glob(self.project_dir + '/*.py'):
+                report.write('-----------------------------------------------')
+                report.write('\nFile: ' + pyfile.split('/')[-1] + '\n')
+                d = self.run_flake(pyfile)
+                for key, value in d.items():
+                    report.write('ERROR CODE:' + key + ' : ' + value[0].get('comment') + '\n')
+                    for item in value:
+                        report.write('\t\tLine number: ' + item.get('line_num') +
+                                     ',\t\tcolumn: ' + item.get('column_num') + '\n')
+
         pass
 
 
@@ -89,4 +111,5 @@ man = ReportManager('anncadClassifier', [])
 man.leave_only_python_files()
 out = man.run_flake(
     '/home/marta/projects/PycharmProjects/staticCodeAnalyzer/staticCodeAnalyzer/cloned_repos/anncadClassifier/anncad.py')
-print(man.parse_flake_output(out))
+# print(man.parse_flake_output(out))
+man.prepare_whole_report()
