@@ -1,17 +1,13 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 {# Load the tag library #}
 {% load bootstrap3 %}
-
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-
-
 {% load staticfiles %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" xmlns="http://www.w3.org/1999/html"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script src="{% static 'functionality.js' %}"></script>
 <title>Static Code Analyzer</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
@@ -22,35 +18,56 @@
 
 {% block content %}
     {% csrf_token %}
-    <table class="table">
-        <thead class="thead-inverse">
-            <tr>
-                <th>Name</th>
-                <th>Last modification date</th>
-                <th>Url</th>
-            </tr>
-        </thead>
-        <tbody>
-            <td> {{ project.name}} </td>
-            <td> {{ project.last_commit_date }} </td>
-            <td> {{ project.repository_url }} </td>
-        </tbody>
-    </table>
+    <div class="container-fluid">
+        <table class="table">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Name</th>
+                    <th>Last modification date</th>
+                    <th>Url</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td> {{ project.name}} </td>
+                <td> {{ project.last_commit_date }} </td>
+                <td> {{ project.repository_url }} </td>
+            </tbody>
+        </table>
+    </div>
     <div class="container-fluid">
         <span id="project_state" class="label label-primary">Project site.</span>
     </div>
 
+    <div class="container-fluid" id="flake_options">
+        <div class="checkbox">
+          <label><input type="checkbox" value="E">pep8 errors</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" value="W">pep8 warnings</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" value="F">PyFlakes codes</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" value="C9">McCabe complexity</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" value="N8">Naming conventions</label>
+        </div>
+        <a href="http://flake8.pycqa.org/en/2.5.5/warnings.html">Read more about the errors and warnings. </a>
+    </div>
+
     <div class="container-fluid">
-        <button type="button" id="clone_button" class="btn" onclick="sendFormRequest('{{project.id}}', '/clone_project/')">Clone</button>
-        <button type="button" id="report_button" class="btn" onclick="sendFormRequest('{{project.id}}', '/generate_report/')">Generate a report</button>
+        <button type="button" id="clone_button" class="btn" onclick="sendCloneRequest('{{project.id}}')">Clone</button>
+        <button type="button" id="report_button" class="btn" onclick="sendReportRequest('{{project.id}}')">Generate a report</button>
         <!--<a href="{% url 'clone_project' %}" class="btn btn-info" role="button">Clone project</a>-->
         <a href="/" class="btn btn-info" role="button">Back</a>
     </div>
 
 
 {% endblock %}
-
-{% if report_list %}
+<div class="container-fluid">
+    {% if report_list %}
 <span>
     Available reports
 </span>
@@ -66,3 +83,4 @@
     {% else %}
     <p>No reports available.</p>
 {% endif %}
+</div>

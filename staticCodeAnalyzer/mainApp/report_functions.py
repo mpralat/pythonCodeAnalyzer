@@ -40,9 +40,10 @@ class ReportManager:
         '''
         command = ['flake8']
         command.append(file_name)
+        select_string = '--select=' + ','.join(self.flake_options)
+        command.append(select_string)
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         output = p.stdout.read()
-
         output = output.splitlines()
         return self.parse_flake_output(output)
 
@@ -109,9 +110,9 @@ def get_immediate_subdirectories(main_dir):
             if os.path.isdir(os.path.join(main_dir, name))]
 
 
-man = ReportManager('anncadClassifier', [])
-man.leave_only_python_files()
-out = man.run_flake(
-    '/home/marta/projects/PycharmProjects/staticCodeAnalyzer/staticCodeAnalyzer/cloned_repos/anncadClassifier/anncad.py')
-# print(man.parse_flake_output(out))
-man.create_whole_report()
+# man = ReportManager('anncadClassifier', [])
+# man.leave_only_python_files()
+# out = man.run_flake(
+#     '/home/marta/projects/PycharmProjects/staticCodeAnalyzer/staticCodeAnalyzer/cloned_repos/anncadClassifier/anncad.py')
+# # print(man.parse_flake_output(out))
+# man.create_whole_report()

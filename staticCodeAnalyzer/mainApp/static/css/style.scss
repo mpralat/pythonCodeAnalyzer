@@ -23,7 +23,6 @@ header{
 //  background: $pink;
 //}
 table {
-  margin: 40px;
   display: table;
   width: 70%;
   table-layout: fixed;
@@ -33,7 +32,9 @@ table {
 }
 
 .container-fluid{
-  margin: 40px;
+  padding: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 //
 //th, td {

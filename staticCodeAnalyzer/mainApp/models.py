@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 # Create your models here.
 class Project(models.Model):
@@ -6,6 +7,7 @@ class Project(models.Model):
     repository_url = models.URLField()
     last_commit_date = models.DateTimeField()
     cloned_dir_path = models.CharField(max_length=200, default='')
+    # last_report_date = models.DateTimeField(default=datetime.datetime.now())
 
 
 class Report(models.Model):

@@ -60,12 +60,11 @@ def clone_project(request):
 def generate_report(request):
     if request.POST:
         project_id = request.POST.get('project_id')
-        print(project_id)
+        print(request.POST)
         project = Project.objects.get(pk=int(project_id))
-        print(project.name)
-        reportManager = report_functions.ReportManager(flake_options=[], project_name=project.name)
+        flake_options = request.POST.get('flake_options')
+        reportManager = report_functions.ReportManager(flake_options=flake_options, project_name=project.name)
         report_path = reportManager.create_whole_report()
-        print(report_path)
         # Creating new Report object
         report = Report(date=datetime.datetime.now(), path_to_report=report_path,
                         project=project)

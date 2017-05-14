@@ -1,17 +1,12 @@
 /**
  * Created by marta on 07.05.17.
  */
-function sendFormRequest(project_id, url){
+function sendCloneRequest(project_id){
     console.log(project_id);
-    if(url === '/clone_project/'){
-         $('#project_state').text('Cloning the repository...');
-         document.getElementById("report_button").disabled = true;
-    } else {
-         $('#project_state').text('Generating the report...');
-         document.getElementById("clone_button").disabled = true;
-    }
+    $('#project_state').text('Cloning the repository...');
+    document.getElementById("report_button").disabled = true;
     $.ajax({
-        url: url,
+        url: /clone_project/,
         type: "POST",
         data: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
                 'project_id' : project_id},
@@ -25,7 +20,31 @@ function sendFormRequest(project_id, url){
             },
             203: function () {
                 $('#project_state').text('Made first, fresh clone.');
-            },
+            }
+        }
+    }).done(function () {
+        console.log("done");
+        document.getElementById("report_button").disabled = false;
+    });
+}
+
+function sendReportRequest(project_id){
+    console.log(project_id);
+     $('#project_state').text('Generating the report...');
+     document.getElementById("clone_button").disabled = true;
+     checked_flake_options = [];
+     $('#flake_options').find('input:checked').each(function () {
+            checked_flake_options.push($(this).attr('value'));
+        });
+    var jsonArr = JSON.stringify(checked_flake_options);
+    $.ajax({
+        url: '/generate_report/',
+        type: "POST",
+        data: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                'project_id' : project_id,
+                'flake_options' : jsonArr},
+        dataType: "json",
+        statusCode: {
             204: function () {
                 $('#project_state').text('Report generated.');
             },
@@ -35,7 +54,6 @@ function sendFormRequest(project_id, url){
         }
     }).done(function () {
         console.log("done");
-        document.getElementById("report_button").disabled = false;
         document.getElementById("clone_button").disabled = false;
         window.location.reload();
     });
