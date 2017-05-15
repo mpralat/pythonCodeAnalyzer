@@ -75,6 +75,12 @@ def generate_report(request):
         reportManager = report_functions.ReportManager(flake_options=flake_options, project_name=project.name)
         # Checking if the report should be generated again
         if reportManager.is_generating_report_useful():
+            cloneManager = repository_functions.RepositoryManager(project.repository_url)
+            clone_code = cloneManager.clone_repo()
+            if clone_code == 201:
+                # if the repository has been cloned again, we update the data in db
+                project.last_commit_date = cloneManager.latest_commit_date
+                project.save()
             report_path = reportManager.create_whole_report()
             # Creating new Report object
             report = Report(date=datetime.datetime.now(), path_to_report=report_path,
@@ -90,11 +96,19 @@ def display_report(request, report_id):
         report = Report.objects.get(pk=report_id)
     except Report.DoesNotExist:
         raise Http404("Project does not exist")
-
-    # TODO TXT TO PDF, DISPLAY PDF IN HTML
     try:
         with open(report.path_to_report) as f:
-            text_content = f.readlines()
+            text_arr = f.readlines()
+        text_content = '<div class="report_header">' + text_arr[0] + '<br>' + text_arr[1] +'</div>'
+        for line in text_arr[2:]:
+            if '-----' in line:
+                text_content += '<hr>'
+            elif 'File' in line:
+                text_content += '<div class="file_name">' + line + '</div>'
+            elif 'ERROR CODE' in line:
+                text_content += '<div class="error_code">' + line + '</div>'
+            else:
+                text_content += '<p>' + line + '</p>'
     except FileNotFoundError:
         text_content = "<div> Sorry, but the content you are trying to reach has been deleted. " \
                        "Please generate your report again.</div>"

@@ -18,10 +18,7 @@
 
 {% block content %}
     {% csrf_token %}
-
-<div>
-    {{ content }}
-</div>
-
+{{ content | safe }}
 <a href="/project/{{report.project.id}}" class="btn btn-info" role="button">Back</a>
+
 {% endblock %}
