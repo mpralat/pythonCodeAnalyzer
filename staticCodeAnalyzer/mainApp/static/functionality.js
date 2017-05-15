@@ -14,12 +14,15 @@ function sendCloneRequest(project_id){
         statusCode: {
             201: function () {
                 $('#project_state').text('Detected some new commits. Cloned the repository again.');
+                document.getElementById("report_button").disabled = false;
             },
             202: function () {
                 $('#project_state').text('Latest version already cloned. Not cloning again.');
+                document.getElementById("report_button").disabled = false;
             },
             203: function () {
                 $('#project_state').text('Made first, fresh clone.');
+                document.getElementById("report_button").disabled = false;
             }
         }
     }).done(function () {

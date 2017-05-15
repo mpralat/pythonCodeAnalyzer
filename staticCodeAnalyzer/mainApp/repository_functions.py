@@ -4,13 +4,12 @@ from git import Repo
 from urllib.request import urlopen
 import json
 from datetime import datetime, timedelta
+import shutil
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CLONED_AGAIN = 201
 NOT_CLONING = 202
 FIRST_CLONE = 203
-
-# TODO class maybe?
 
 class RepositoryManager:
     def __init__(self, base_url):
@@ -37,7 +36,7 @@ class RepositoryManager:
             repo_date = self.latest_commit_date_from_cloned_repo()
             if url_date > repo_date:
                 # Cloning the repo again
-                os.rmdir(self.cloned_repo_path)
+                shutil.rmtree(self.cloned_repo_path)
                 Repo.clone_from(self.url, self.cloned_repo_path)
                 self.cloned_before = True
                 print("Cloned the repo again!")
@@ -52,7 +51,9 @@ class RepositoryManager:
         return FIRST_CLONE
 
     def latest_commit_date_from_url(self):
+        print(self.project_name_with_author)
         url = 'https://api.github.com/repos/{project}/commits?per_page=1'.format(project=self.project_name_with_author)
+        print(url)
         response = urlopen(url).read()
         response_data = json.loads(response.decode())
         # Get the date string from the json
@@ -108,7 +109,8 @@ def process_github_url(repo_url):
     '''
     Parses the given repository url to get the project path.
     '''
-    chunks_array = repo_url.rstrip('.git').rstrip('/').split('/')
+    print(repo_url)
+    chunks_array = repo_url.replace(".git", "").rstrip('/').split('/')
     print(chunks_array)
     github_index = chunks_array.index('github.com')
     project_chunks = chunks_array[github_index + 1:]

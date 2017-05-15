@@ -3,6 +3,7 @@ import glob
 import os
 import subprocess
 import shutil
+from .models import Report, Project
 
 
 class ReportManager:
@@ -74,7 +75,6 @@ class ReportManager:
         Prepares the flake output for all files and generates the pdf document.
         :return: 
         '''
-        # TODO not generating for the second time same report
         # Removing non-python files and creating a directory with reports.
         self.leave_only_python_files()
         reports_dir = os.path.join(self.base_dir, "reports")
@@ -101,6 +101,31 @@ class ReportManager:
 
         return report_ful_path
 
+    def is_generating_report_useful(self):
+        ''' 
+        Gets the latest report from the database and checks if there are any fresh commits in the repository.
+        If there are new commits or the user has chosen a different set of options for the
+        report, returns True.
+        :return: True if the report 
+        '''
+        project = Project.objects.filter(name=self.project_name).first()
+        last_report = Report.objects.filter(project=project.id).order_by('-date').first()
+        if last_report:
+            # Checking if the options are different:
+            if last_report.options:
+                options = last_report.options.split(';')
+            else:
+                options = ''
+            if set(options) != set(self.flake_options):
+                return True
+            else:
+                if project.last_commit_date < last_report.date:
+                    return False
+                else:
+                    return True
+        else:
+            return True
+
 
 def get_immediate_subdirectories(main_dir):
     '''
@@ -109,10 +134,3 @@ def get_immediate_subdirectories(main_dir):
     return [name for name in os.listdir(main_dir)
             if os.path.isdir(os.path.join(main_dir, name))]
 
-
-# man = ReportManager('anncadClassifier', [])
-# man.leave_only_python_files()
-# out = man.run_flake(
-#     '/home/marta/projects/PycharmProjects/staticCodeAnalyzer/staticCodeAnalyzer/cloned_repos/anncadClassifier/anncad.py')
-# # print(man.parse_flake_output(out))
-# man.create_whole_report()

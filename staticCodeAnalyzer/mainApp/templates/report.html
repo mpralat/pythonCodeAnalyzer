@@ -20,8 +20,8 @@
     {% csrf_token %}
 
 <div>
-    <iframe src="{{content}}"></iframe>
+    {{ content }}
 </div>
 
-
+<a href="/project/{{report.project.id}}" class="btn btn-info" role="button">Back</a>
 {% endblock %}

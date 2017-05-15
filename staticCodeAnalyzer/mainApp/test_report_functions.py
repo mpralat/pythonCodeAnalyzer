@@ -39,3 +39,6 @@ class LeaveOnlyPythonFilesTestCase(TestCase):
 
     def tearDown(self):
         shutil.rmtree(self.test_project_dir)
+
+# class IsLastReportUpToDateTestCase(TestCase):
+#     def

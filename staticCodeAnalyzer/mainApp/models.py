@@ -11,6 +11,7 @@ class Project(models.Model):
 
 
 class Report(models.Model):
-    date = models.DateField()
+    date = models.DateTimeField()
     path_to_report = models.CharField(max_length=300, default='')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    options = models.TextField(default='')
