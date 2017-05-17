@@ -8,6 +8,8 @@ class LeaveOnlyPythonFilesTestCase(TestCase):
         self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.test_project_dir = self.base_dir + "/cloned_repos/test_project/"
         # Populating with some test python files
+        if not os.path.exists(self.base_dir + "/cloned_repos/"):
+            os.mkdir(self.base_dir + "/cloned_repos/")
         os.mkdir(self.test_project_dir, 0o777)
         for i in range (0,3):
             open(os.path.join(self.test_project_dir, "test" + str(i) + ".py"), 'a').close()
