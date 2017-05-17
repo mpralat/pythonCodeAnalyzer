@@ -1,0 +1,174 @@
+Project: anncadClassifier
+Generated: 2017-05-17_10:39:39
+
+-----------------------------------------------
+File: grid.py
+ERROR CODE:E501 : E501 line too long (119 > 79 characters)'
+		Line number: 17,		column: 80
+		Line number: 36,		column: 80
+		Line number: 51,		column: 80
+		Line number: 59,		column: 80
+		Line number: 65,		column: 80
+		Line number: 70,		column: 80
+		Line number: 74,		column: 80
+		Line number: 79,		column: 80
+		Line number: 81,		column: 80
+		Line number: 96,		column: 80
+		Line number: 99,		column: 80
+		Line number: 101,		column: 80
+		Line number: 104,		column: 80
+		Line number: 105,		column: 80
+		Line number: 106,		column: 80
+		Line number: 108,		column: 80
+		Line number: 111,		column: 80
+		Line number: 122,		column: 80
+		Line number: 127,		column: 80
+		Line number: 140,		column: 80
+		Line number: 147,		column: 80
+		Line number: 156,		column: 80
+		Line number: 158,		column: 80
+		Line number: 159,		column: 80
+		Line number: 162,		column: 80
+		Line number: 163,		column: 80
+		Line number: 165,		column: 80
+		Line number: 170,		column: 80
+		Line number: 176,		column: 80
+		Line number: 177,		column: 80
+		Line number: 178,		column: 80
+		Line number: 180,		column: 80
+		Line number: 184,		column: 80
+		Line number: 185,		column: 80
+		Line number: 193,		column: 80
+		Line number: 194,		column: 80
+		Line number: 195,		column: 80
+		Line number: 196,		column: 80
+		Line number: 197,		column: 80
+		Line number: 206,		column: 80
+		Line number: 212,		column: 80
+		Line number: 214,		column: 80
+		Line number: 221,		column: 80
+		Line number: 234,		column: 80
+		Line number: 237,		column: 80
+		Line number: 244,		column: 80
+		Line number: 245,		column: 80
+		Line number: 251,		column: 80
+		Line number: 266,		column: 80
+		Line number: 269,		column: 80
+		Line number: 271,		column: 80
+		Line number: 272,		column: 80
+		Line number: 274,		column: 80
+		Line number: 276,		column: 80
+		Line number: 277,		column: 80
+		Line number: 284,		column: 80
+		Line number: 287,		column: 80
+		Line number: 290,		column: 80
+		Line number: 291,		column: 80
+		Line number: 293,		column: 80
+		Line number: 300,		column: 80
+		Line number: 305,		column: 80
+		Line number: 307,		column: 80
+ERROR CODE:E303 : E303 too many blank lines (2)'
+		Line number: 68,		column: 5
+ERROR CODE:E221 : E221 multiple spaces before operator'
+		Line number: 132,		column: 39
+-----------------------------------------------
+File: example.py
+ERROR CODE:W293 : W293 blank line contains whitespace'
+		Line number: 4,		column: 1
+ERROR CODE:E501 : E501 line too long (91 > 79 characters)'
+		Line number: 5,		column: 80
+		Line number: 12,		column: 80
+		Line number: 15,		column: 80
+ERROR CODE:E211 : E211 whitespace before '('"
+		Line number: 11,		column: 29
+ERROR CODE:W391 : W391 blank line at end of file'
+		Line number: 16,		column: 1
+-----------------------------------------------
+File: test_example.py
+-----------------------------------------------
+File: main.py
+ERROR CODE:F401 : F401 'example.Example' imported but unused"
+		Line number: 2,		column: 1
+		Line number: 5,		column: 1
+ERROR CODE:E501 : E501 line too long (124 > 79 characters)'
+		Line number: 9,		column: 80
+		Line number: 19,		column: 80
+-----------------------------------------------
+File: generator.py
+ERROR CODE:E501 : E501 line too long (80 > 79 characters)'
+		Line number: 10,		column: 80
+		Line number: 25,		column: 80
+		Line number: 26,		column: 80
+		Line number: 49,		column: 80
+-----------------------------------------------
+File: utils.py
+ERROR CODE:E501 : E501 line too long (88 > 79 characters)'
+		Line number: 19,		column: 80
+		Line number: 20,		column: 80
+ERROR CODE:E302 : E302 expected 2 blank lines, found 1'
+		Line number: 31,		column: 1
+-----------------------------------------------
+File: test_hypercube.py
+-----------------------------------------------
+File: hypercube.py
+ERROR CODE:E501 : E501 line too long (110 > 79 characters)'
+		Line number: 6,		column: 80
+		Line number: 30,		column: 80
+		Line number: 35,		column: 80
+		Line number: 42,		column: 80
+		Line number: 50,		column: 80
+		Line number: 56,		column: 80
+		Line number: 57,		column: 80
+		Line number: 59,		column: 80
+		Line number: 63,		column: 80
+		Line number: 64,		column: 80
+		Line number: 65,		column: 80
+		Line number: 66,		column: 80
+		Line number: 72,		column: 80
+		Line number: 84,		column: 80
+		Line number: 95,		column: 80
+		Line number: 96,		column: 80
+		Line number: 102,		column: 80
+		Line number: 106,		column: 80
+		Line number: 107,		column: 80
+		Line number: 114,		column: 80
+		Line number: 115,		column: 80
+ERROR CODE:W293 : W293 blank line contains whitespace'
+		Line number: 7,		column: 1
+		Line number: 9,		column: 1
+		Line number: 22,		column: 1
+ERROR CODE:E222 : E222 multiple spaces after operator'
+		Line number: 77,		column: 63
+-----------------------------------------------
+File: streamEngine.py
+-----------------------------------------------
+File: anncad.py
+ERROR CODE:E302 : E302 expected 2 blank lines, found 1'
+		Line number: 5,		column: 1
+ERROR CODE:W293 : W293 blank line contains whitespace'
+		Line number: 8,		column: 1
+		Line number: 36,		column: 1
+		Line number: 52,		column: 1
+		Line number: 65,		column: 1
+		Line number: 77,		column: 1
+		Line number: 95,		column: 1
+ERROR CODE:E501 : E501 line too long (174 > 79 characters)'
+		Line number: 9,		column: 80
+		Line number: 11,		column: 80
+		Line number: 12,		column: 80
+		Line number: 14,		column: 80
+		Line number: 16,		column: 80
+		Line number: 21,		column: 80
+		Line number: 31,		column: 80
+		Line number: 40,		column: 80
+		Line number: 41,		column: 80
+		Line number: 51,		column: 80
+		Line number: 81,		column: 80
+		Line number: 82,		column: 80
+		Line number: 87,		column: 80
+		Line number: 94,		column: 80
+		Line number: 109,		column: 80
+ERROR CODE:W291 : W291 trailing whitespace'
+		Line number: 11,		column: 108
+		Line number: 45,		column: 56
+		Line number: 94,		column: 164
