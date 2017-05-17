@@ -1,5 +1,4 @@
 from django.conf.urls import url
-import datetime
 from . import views
 
 urlpatterns = [

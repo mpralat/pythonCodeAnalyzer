@@ -1,9 +1,8 @@
 import os
-import git
 from git import Repo
 from urllib.request import urlopen
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 import shutil
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

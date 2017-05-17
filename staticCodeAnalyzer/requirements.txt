@@ -3,4 +3,3 @@ flake8 >=3.3.0
 pylint >=1.7.1
 mccabe >=0.6.1
 django-bootstrap3 >=8.2.3
-appname

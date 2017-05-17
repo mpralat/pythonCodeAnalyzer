@@ -8,13 +8,21 @@ import datetime
 
 
 def index(request):
+    '''
+    Displays the main page. Gets all of the projects from the database and displays them.
+    Allows the user to type in the url and create a new Project.
+    '''
     project_form = ProjectForm()
     context = {'projects_list': Project.objects.order_by('-last_commit_date'), 'form': project_form}
     return render(request, 'index.html', context)
 
 
 def add_project(request):
-    print("add project")
+    '''
+    Adding a new project. Checks the url, creates new RepositoryManager object and checks
+    whether it's already in a database. If it is not, creates a new project and redirects to the
+    project site. 
+    '''
     form = ProjectForm(request.POST or None)
     if request.POST:
         if form.is_valid():
@@ -24,7 +32,6 @@ def add_project(request):
                 return HttpResponseRedirect('/')
             else:
                 repositoryManager = repository_functions.RepositoryManager(url)
-
                 results = Project.objects.filter(name=repositoryManager.project_name)
                 if results.count() > 0:
                     print("Already in database!")
@@ -42,6 +49,10 @@ def add_project(request):
 
 
 def display_project(request, project_id):
+    '''
+    Displays the project if it exists. Gets the reports that are connected to the project
+    and passes them to the html.
+    '''
     try:
         project = Project.objects.get(pk=project_id)
     except Project.DoesNotExist:
@@ -52,6 +63,11 @@ def display_project(request, project_id):
 
 
 def clone_project(request):
+    '''
+    Gets the project from the database and creates new RepositoryManager.
+    If there are some new commits, updates the date of the Project and returns the 
+    code describing the result of cloning function.
+    '''
     if request.POST:
         project_id = request.POST.get('project_id')
         print(project_id)
@@ -66,6 +82,11 @@ def clone_project(request):
 
 
 def generate_report(request):
+    '''
+    Generates a new Report. Checks whether generating the report is necessary and tries
+    cloning again to make sure the latest data is available on the server.
+    :return: HttpResponse with the status code describing the status of preparing a new report.
+    '''
     if request.POST:
         project_id = request.POST.get('project_id')
         project = Project.objects.get(pk=int(project_id))
@@ -92,6 +113,11 @@ def generate_report(request):
 
 
 def display_report(request, report_id):
+    '''
+    Generates the HTML file from txt report and passes the output to the report.html
+    :return: Http404 response if the project doesn't exist, HttpResponse with 
+    a status_code 200 if everything goes well.
+    '''
     try:
         report = Report.objects.get(pk=report_id)
     except Report.DoesNotExist:

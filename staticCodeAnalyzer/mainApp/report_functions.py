@@ -85,8 +85,8 @@ class ReportManager:
         report_name = self.project_name + '_' + date + '.txt'
 
         # Preparing the txt file with report
-        report_ful_path = os.path.join(reports_dir, report_name)
-        with open(report_ful_path, 'w') as report:
+        report_full_path = os.path.join(reports_dir, report_name)
+        with open(report_full_path, 'w') as report:
             report.write('Project: ' + self.project_name + '\n')
             report.write('Generated: ' + date + '\n\n')
             for pyfile in glob.glob(self.project_dir + '/*.py'):
@@ -99,7 +99,7 @@ class ReportManager:
                         report.write('\t\tLine number: ' + item.get('line_num') +
                                      ',\t\tcolumn: ' + item.get('column_num') + '\n')
 
-        return report_ful_path
+        return report_full_path
 
     def is_generating_report_useful(self):
         ''' 
