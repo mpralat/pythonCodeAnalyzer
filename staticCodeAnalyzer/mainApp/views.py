@@ -125,7 +125,7 @@ def display_report(request, report_id):
     try:
         with open(report.path_to_report) as f:
             text_arr = f.readlines()
-        text_content = '<div class="report_header">' + text_arr[0] + '<br>' + text_arr[1] +'</div>'
+        text_content = '<div class="report_header">' + text_arr[0] + '<br>' + text_arr[1] + '</div>'
         for line in text_arr[2:]:
             if '-----' in line:
                 text_content += '<hr>'

@@ -10,6 +10,7 @@ CLONED_AGAIN = 201
 NOT_CLONING = 202
 FIRST_CLONE = 203
 
+
 class RepositoryManager:
     def __init__(self, base_url):
         self.url = base_url

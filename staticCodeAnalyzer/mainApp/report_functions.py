@@ -133,4 +133,3 @@ def get_immediate_subdirectories(main_dir):
     '''
     return [name for name in os.listdir(main_dir)
             if os.path.isdir(os.path.join(main_dir, name))]
-

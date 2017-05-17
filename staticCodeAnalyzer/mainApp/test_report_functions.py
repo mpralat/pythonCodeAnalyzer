@@ -3,6 +3,7 @@ import os
 from . import report_functions
 import shutil
 
+
 class LeaveOnlyPythonFilesTestCase(TestCase):
     def setUp(self):
         self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -11,7 +12,7 @@ class LeaveOnlyPythonFilesTestCase(TestCase):
         if not os.path.exists(self.base_dir + "/cloned_repos/"):
             os.mkdir(self.base_dir + "/cloned_repos/")
         os.mkdir(self.test_project_dir, 0o777)
-        for i in range (0,3):
+        for i in range(0, 3):
             open(os.path.join(self.test_project_dir, "test" + str(i) + ".py"), 'a').close()
         self.report_manager = report_functions.ReportManager(project_name='test_project', flake_options=[])
 
@@ -41,6 +42,3 @@ class LeaveOnlyPythonFilesTestCase(TestCase):
 
     def tearDown(self):
         shutil.rmtree(self.test_project_dir)
-
-# class IsLastReportUpToDateTestCase(TestCase):
-#     def
