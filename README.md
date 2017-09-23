@@ -23,14 +23,14 @@ Then the application is ready at localhost:8000
 ### Basic functionality
 This is a simple web application that allows the user to analyze the python files.
 
-####Adding the project
+#### Adding the project
 On the main page, the user can type in the url of the github project. Then, several actions 
 are fired.
 * First, the application checks whether  the provided url is correct by pinging the github API and checking the response code.
 * If the url is correct, a RepositoryManager is created. 
 * Application uses a model query to check whether the project is already in the database. If it's not, a new
 Project is created and saved. Then, the user is redirected to the project site.
-####Project page
+#### Project page
 After adding a new Project or clicking on an existing one on the main page list, the user
 is redirected to the Project page. It shows the basic info about the Project and Reports connected to the Project.
 It also allows the user to choose Report options, clone the project and generate a new Report.
