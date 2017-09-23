@@ -1,4 +1,4 @@
-# Static Code Analyzer
+# Python Code Analyzer
 ## How to run
 ### Installing the dependencies
 To install the dependencies, you need python and pip installed. 
